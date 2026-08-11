@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* ── Design tokens (Tailwind v4 CSS-first config) ─────────────────────── */
+@theme {
+  --color-background: #020617; /* slate-950 */
+  --color-surface: #0b1526; /* elevated panels */
+  --color-accent: #22d3ee; /* cyan-400 */
+  --color-accent-2: #2dd4bf; /* teal-400 */
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-geist), sans-serif;
+
+  --animate-float-slow: float 16s ease-in-out infinite;
+  --animate-float-slower: float 22s ease-in-out infinite reverse;
+  --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scroll-cue: scroll-cue 1.8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(40px, -36px, 0) scale(1.08);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.4;
+  }
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: #e2e8f0; /* slate-200 */
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #020617;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b; /* slate-800 */
+  border-radius: 999px;
+  border: 2px solid #020617;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* ── Custom utilities ─────────────────────────────────────────────────── */
+/* Faint tech-grid backdrop (paired with a radial mask on the element) */
+@utility bg-grid {
+  background-image: linear-gradient(
+      to right,
+      rgb(148 163 184 / 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Glassmorphism panel */
+@utility glass {
+  background: rgb(15 23 42 / 0.5); /* slate-900/50 */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Keyboard focus on Originkit shelf rows — the vendored anchors are
+   inline-styled, so Tailwind ring utilities can't reach them. Box-shadow
+   ring mirrors ring-2 ring-cyan-400 ring-offset-2 ring-offset-slate-950;
+   outline:none wins over the global :focus-visible rule (higher specificity). */
+.work-shelf a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #22d3ee, 0 0 0 4px #020617;
+}
+
+/* ── Accessibility: never fight the user's OS setting ────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
