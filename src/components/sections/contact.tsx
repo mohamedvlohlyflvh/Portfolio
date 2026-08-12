@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import LineMaskSplit from "@/components/originkit/ui/scroll-text-reveal";
+import GravityFall from "@/components/originkit/ui/falling-text";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { GITHUB, GITHUB_ICON } from "@/lib/data/projects";
 import { fadeUpItem, staggerContainer } from "@/lib/motion-tokens";
@@ -12,6 +14,24 @@ import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
    Left empty on purpose: the GitHub CTA below is live right now. */
 const EMAIL = "";
 
+/* GravityFall plays on MOUNT (no scroll-trigger prop), and its mount effect
+   lists runAppear (identity follows `transition`) — module-level constants
+   keep both stable so it falls exactly once, no replay on re-render. */
+const FALL_TRANSITION = {
+  type: "spring",
+  stiffness: 400,
+  damping: 15,
+  mass: 1,
+} as const;
+const FALL_FONT = {
+  fontFamily: "var(--font-geist)",
+  fontWeight: 400,
+  fontSize: 18,
+  lineHeight: 1.7,
+  letterSpacing: "0em",
+  textAlign: "left",
+} as const;
+
 /**
  * Contact — the closer. LineMaskSplit heading (same reveal family as Work),
  * one real CTA (GitHub), a giant ghost wordmark behind it all. Everything
@@ -19,6 +39,8 @@ const EMAIL = "";
  */
 export function Contact() {
   const reduced = usePrefersReducedMotion();
+  const copyRef = useRef<HTMLDivElement>(null);
+  const copyInView = useInView(copyRef, { once: true, margin: "-80px" });
 
   return (
     <section
@@ -87,14 +109,33 @@ export function Contact() {
             )}
           </div>
 
-          {/* Copy + CTAs */}
-          <motion.p
-            variants={fadeUpItem}
+          {/* Copy — Originkit GravityFall (falling-text): the words drop in
+              when this block scrolls into view. GravityFall is mount-only
+              (no scroll-trigger prop), so a useInView gate mounts it — until
+              then (and under reduced motion) the static p renders, so there
+              is zero layout shift. tag="p" is safe here: only span children. */}
+          <div
+            ref={copyRef}
             className="mt-8 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
           >
-            No forms, no bots — one click away. Issues, DMs, or just saying
-            hi: the repos above are the fastest way to reach me.
-          </motion.p>
+            {reduced || !copyInView ? (
+              <p>
+                No forms, no bots — one click away. Issues, DMs, or just
+                saying hi: the repos above are the fastest way to reach me.
+              </p>
+            ) : (
+              <GravityFall
+                text="No forms, no bots — one click away. Issues, DMs, or just saying hi: the repos above are the fastest way to reach me."
+                color="#94A3B8"
+                tag="p"
+                split="words"
+                startY={-300}
+                stagger={0.04}
+                transition={FALL_TRANSITION}
+                font={FALL_FONT}
+              />
+            )}
+          </div>
 
           <motion.div
             variants={fadeUpItem}
