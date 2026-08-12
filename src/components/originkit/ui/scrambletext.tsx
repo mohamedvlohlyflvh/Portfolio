@@ -257,6 +257,12 @@ export default function GlitchCharReveal(props: any) {
     // changes again -> infinite restart loop ("it repeats forever"). Only push
     // new lineGroups when the actual line structure changed.
     const lineGroupsKeyRef = useRef("")
+    // Second guard: the ghost layer is position:absolute (out of flow), so the
+    // root's height = visible chars only. Inside a flex row with items-end the
+    // whole block SHIFTS as it shrinks -> ghost tops move -> the lineGroups key
+    // legitimately changes -> enter effect re-runs -> reset -> collapse. Skip
+    // all line re-measurement while the enter animation is running.
+    const animRunningRef = useRef(false)
     const [placedChars, setPlacedChars] = useState<Record<number, number[]>>({})
     const [shouldAnimate, setShouldAnimate] = useState(false)
     const [enterAnimComplete, setEnterAnimComplete] = useState(false)
@@ -295,6 +301,7 @@ export default function GlitchCharReveal(props: any) {
 
     // ── Line detection ────────────────────────────────────────────────────────
     const detectLines = () => {
+        if (animRunningRef.current) return
         const allLines: number[][] = []
         paragraphs.forEach((_, pi) => {
             const paraEntries = allWords.filter((w) => w.pi === pi)
@@ -400,6 +407,7 @@ export default function GlitchCharReveal(props: any) {
         if (enterMode === "none" || !shouldAnimate || lineGroups.length === 0)
             return
         let cancelled = false
+        animRunningRef.current = true
         setDisplays({})
         setPlacedChars({})
         setEnterAnimComplete(false)
@@ -621,10 +629,12 @@ export default function GlitchCharReveal(props: any) {
 
         ;(async () => {
             await run()
+            animRunningRef.current = false
             if (!cancelled) setEnterAnimComplete(true)
         })()
         return () => {
             cancelled = true
+            animRunningRef.current = false
         }
     }, [
         lineGroups,
