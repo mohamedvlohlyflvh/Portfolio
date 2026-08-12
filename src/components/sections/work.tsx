@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import LineMaskSplit from "@/components/originkit/ui/scroll-text-reveal";
 import HoverImageReveal from "@/components/originkit/ui/hover-image-reveal";
+import GlitchCharReveal from "@/components/originkit/ui/scrambletext";
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
 import { PROJECTS, GITHUB, GITHUB_ICON, type Project } from "@/lib/data/projects";
 import { fadeUpItem, staggerContainer, motionTokens } from "@/lib/motion-tokens";
@@ -124,14 +125,51 @@ export function Work() {
           </div>
 
           <div className="mt-16 flex flex-wrap items-end justify-between gap-6">
-            <motion.p
-              variants={fadeUpItem}
-              className="max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
-            >
-              Two apps I use daily and three prototypes I keep sharpening. The
-              featured two link straight to the live product — the rest live on
-              GitHub, source and all.
-            </motion.p>
+            {/* Copy — Originkit GlitchCharReveal scramble, same treatment as
+                the hero subtitle: hover + flicker OFF (a resting cursor must
+                not re-scramble; no per-char flicker flood on long text),
+                tag="div" mandatory. 2 paragraphs via \n. restState "solid" =
+                visible pre-trigger, so no placeholder; the component's own IO
+                plays it on scroll ("middle" ≈ half-visible, matching the
+                LineMaskSplit heading beat). Reduced motion → static text. */}
+            <div className="max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg">
+              {reduced ? (
+                <p>
+                  Two apps I use daily and three prototypes I keep sharpening.
+                  The featured two link straight to the live product — the rest
+                  live on GitHub, source and all.
+                </p>
+              ) : (
+                <GlitchCharReveal
+                  words="Two apps I use daily and three prototypes I keep sharpening.
+
+The featured two link straight to the live product — the rest live on GitHub, source and all."
+                  color="#94A3B8"
+                  tag="div"
+                  hoverAnimation={{ type: "none" }}
+                  enterAnimation={{
+                    mode: "multiLine",
+                    restState: "solid",
+                    replay: false,
+                    position: "middle",
+                    scrambleIntensity: 45,
+                    ease: { type: "tween", duration: 0.6, ease: "easeOut" },
+                    // Flicker OFF — same reason as hero subtitle (long text).
+                    flickerEnabled: false,
+                    flickerColor: "#64748B",
+                    flickerIntensity: 30,
+                    flickerSpeed: 5,
+                  }}
+                  font={{
+                    fontFamily: "var(--font-geist)",
+                    fontSize: "inherit",
+                    lineHeight: "inherit",
+                    fontWeight: "inherit",
+                    letterSpacing: "0",
+                  }}
+                />
+              )}
+            </div>
             <motion.a
               variants={fadeUpItem}
               href={GITHUB}
