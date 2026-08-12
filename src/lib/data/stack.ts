@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import { Braces, HardDrive, Layers } from "lucide-react";
+import { FaWindows } from "react-icons/fa";
 import {
-  SiDocker,
   SiExpress,
   SiGithub,
   SiLinux,
@@ -56,7 +56,7 @@ export const stackCategories: StackCategory[] = [
       { name: "Python", icon: SiPython },
       { name: "Node.js", icon: SiNodedotjs },
       { name: "Express", icon: SiExpress },
-      { name: "REST / GraphQL", icon: Braces },
+      { name: "REST", icon: Braces },
     ],
   },
   {
@@ -77,7 +77,7 @@ export const stackCategories: StackCategory[] = [
       { name: "Git / GitHub", icon: SiGithub },
       { name: "Netlify", icon: SiNetlify },
       { name: "Linux (Arch / Fedora)", icon: SiLinux },
-      { name: "Docker", icon: SiDocker },
+      { name: "Windows", icon: FaWindows },
       { name: "Vercel", icon: SiVercel },
     ],
   },
