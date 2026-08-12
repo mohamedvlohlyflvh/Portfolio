@@ -117,18 +117,26 @@ export function Hero() {
         </div>
 
         {/* Capability subtitle — Originkit GlitchCharReveal scramble, gated to
-            mount at 500ms so it lands on the unified entrance beat. Placeholder
-            keeps layout stable until then; tag="div" is mandatory. */}
+            mount at 500ms so it lands on the unified entrance beat. Three
+            paragraphs via \n — each renders its own element and scrambles.
+            Placeholder keeps layout stable until then; tag="div" is mandatory. */}
         <div className="mt-8 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
           {!showSubtitle ? (
             <p aria-hidden className="opacity-0">
-              I build web apps — front to back. Next.js, Python, Node.js, and
-              the database underneath. I sweat the boring parts: load time,
-              edge cases, code you can still read in six months.
+              I build web apps — front to back.
+              <br />
+              Next.js, Python, Node.js, and the database underneath.
+              <br />
+              I sweat the boring parts: load time, edge cases, code you can
+              still read in six months.
             </p>
           ) : (
             <GlitchCharReveal
-              words="I build web apps — front to back. Next.js, Python, Node.js, and the database underneath. I sweat the boring parts: load time, edge cases, code you can still read in six months."
+              words="I build web apps — front to back.
+
+Next.js, Python, Node.js, and the database underneath.
+
+I sweat the boring parts: load time, edge cases, code you can still read in six months."
               color="#94A3B8"
               tag="div"
               enterAnimation={{
