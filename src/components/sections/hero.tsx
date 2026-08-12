@@ -50,11 +50,11 @@ export function Hero() {
       {/* Ambient aurora blobs */}
       <div
         aria-hidden
-        className="absolute -left-40 -top-48 size-[34rem] animate-float-slow rounded-full bg-cyan-500/[0.13] blur-[130px]"
+        className="absolute -left-40 -top-48 size-136 animate-float-slow rounded-full bg-cyan-500/[0.13] blur-[130px]"
       />
       <div
         aria-hidden
-        className="absolute -bottom-56 -right-40 size-[36rem] animate-float-slower rounded-full bg-teal-500/[0.11] blur-[140px]"
+        className="absolute -bottom-56 -right-40 size-144 animate-float-slower rounded-full bg-teal-500/[0.11] blur-[140px]"
       />
 
       {/* ── Content ───────────────────────────────────────────────────── */}

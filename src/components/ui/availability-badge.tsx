@@ -5,7 +5,7 @@ import { fadeUpItem } from "@/lib/motion-tokens";
 
 /**
  * AvailabilityBadge — pulsing-status pill shown atop the hero.
- * "Available for Freelance & Full-time".
+ * "Available for Freelance".
  */
 export function AvailabilityBadge() {
   return (
@@ -19,7 +19,7 @@ export function AvailabilityBadge() {
         <span className="relative inline-flex size-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]" />
       </span>
       <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-300">
-        Available for Freelance &amp; Full-time
+        Available for Freelance
       </span>
     </motion.div>
   );
