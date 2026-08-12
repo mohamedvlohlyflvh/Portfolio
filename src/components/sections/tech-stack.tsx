@@ -115,10 +115,47 @@ export function TechStack() {
             </>
           )}
         </div>
-        <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
-          No resumé bingo — just the tools I actually use every week, from
-          interface to infrastructure.
-        </p>
+        {/* Subtitle — Originkit GlitchCharReveal scramble, same treatment as
+            the hero subtitle + work copy: hover none, flicker off (large
+            text), tag="div" mandatory, scroll-triggered at "middle" (same
+            beat as the heading above), solid pre-trigger; reduced motion
+            keeps the static p. */}
+        <div className="mt-5 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
+          {reduced ? (
+            <p>
+              No resumé bingo — just the tools I actually use every week, from
+              interface to infrastructure.
+            </p>
+          ) : (
+            <GlitchCharReveal
+              words="No resumé bingo — just the tools I actually use every week, from interface to infrastructure."
+              color="#94A3B8"
+              tag="div"
+              hoverAnimation={{ type: "none" }}
+              enterAnimation={{
+                mode: "multiLine",
+                restState: "solid",
+                replay: false,
+                position: "middle",
+                scrambleIntensity: 45,
+                ease: { type: "tween", duration: 0.6, ease: "easeOut" },
+                // Flicker OFF: ~90 chars — maybeFlicker's per-char loops
+                // flood renders. Same call as hero subtitle + work copy.
+                flickerEnabled: false,
+                flickerColor: "#64748B",
+                flickerIntensity: 30,
+                flickerSpeed: 5,
+              }}
+              font={{
+                fontFamily: "var(--font-geist)",
+                fontSize: "inherit",
+                lineHeight: "inherit",
+                fontWeight: "inherit",
+                letterSpacing: "0",
+              }}
+            />
+          )}
+        </div>
 
         {/* ── Asymmetric bento ───────────────────────────────────────── */}
         <motion.div
