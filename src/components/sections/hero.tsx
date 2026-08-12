@@ -20,9 +20,16 @@ import { fadeUpItem, staggerContainer, motionTokens } from "@/lib/motion-tokens"
 export function Hero() {
   // Mount-gate the Originkit role line: appears + scrambles after 1000ms.
   const [showRoleLine, setShowRoleLine] = useState(false);
+  // Mount-gate the subtitle scramble: lands on the unified 0.5s entrance beat.
+  const [showSubtitle, setShowSubtitle] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setShowRoleLine(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowSubtitle(true), 500);
     return () => clearTimeout(t);
   }, []);
 
@@ -109,15 +116,43 @@ export function Hero() {
           )}
         </div>
 
-        {/* Capability subtitle */}
-        <motion.p
-          variants={fadeUpItem}
-          className="mt-8 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg"
-        >
-          I build web apps — front to back. Next.js, Python, Node.js, and the
-          database underneath. I sweat the boring parts: load time, edge
-          cases, code you can still read in six months.
-        </motion.p>
+        {/* Capability subtitle — Originkit GlitchCharReveal scramble, gated to
+            mount at 500ms so it lands on the unified entrance beat. Placeholder
+            keeps layout stable until then; tag="div" is mandatory. */}
+        <div className="mt-8 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+          {!showSubtitle ? (
+            <p aria-hidden className="opacity-0">
+              I build web apps — front to back. Next.js, Python, Node.js, and
+              the database underneath. I sweat the boring parts: load time,
+              edge cases, code you can still read in six months.
+            </p>
+          ) : (
+            <GlitchCharReveal
+              words="I build web apps — front to back. Next.js, Python, Node.js, and the database underneath. I sweat the boring parts: load time, edge cases, code you can still read in six months."
+              color="#94A3B8"
+              tag="div"
+              enterAnimation={{
+                mode: "multiLine",
+                restState: "solid",
+                replay: false,
+                position: "above",
+                scrambleIntensity: 45,
+                ease: { type: "tween", duration: 0.6, ease: "easeOut" },
+                flickerEnabled: true,
+                flickerColor: "#64748B",
+                flickerIntensity: 30,
+                flickerSpeed: 5,
+              }}
+              font={{
+                fontFamily: "var(--font-geist)",
+                fontSize: "inherit",
+                lineHeight: "inherit",
+                fontWeight: "inherit",
+                letterSpacing: "0",
+              }}
+            />
+          )}
+        </div>
 
         {/* CTAs */}
         <motion.div

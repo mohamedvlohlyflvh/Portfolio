@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import GlitchCharReveal from "@/components/originkit/ui/scrambletext";
 import { stackCategories } from "@/lib/data/stack";
 import { motionTokens } from "@/lib/motion-tokens";
 import { cn } from "@/lib/utils";
@@ -64,12 +65,56 @@ export function TechStack() {
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400">
           What I build with
         </p>
-        <h2
-          id="stack-heading"
-          className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-6xl"
-        >
-          The Arsenal
-        </h2>
+        {/* Heading — Originkit GlitchCharReveal scramble on scroll (native
+            IntersectionObserver, position "middle" = half visible). The
+            component renders its own Tag, so the semantic h2 is sr-only and
+            the visual is a div — tag="div" is mandatory (ghost measurers). */}
+        <div className="mt-4">
+          {reduced ? (
+            <h2
+              id="stack-heading"
+              className="font-display text-4xl font-bold uppercase tracking-tight text-white sm:text-6xl"
+            >
+              The Arsenal
+            </h2>
+          ) : (
+            <>
+              <h2 id="stack-heading" className="sr-only">
+                The Arsenal
+              </h2>
+              <GlitchCharReveal
+                words="The Arsenal"
+                color="#F8FAFC"
+                tag="div"
+                enterAnimation={{
+                  mode: "oneLine",
+                  restState: "solid",
+                  replay: false,
+                  position: "middle",
+                  scrambleIntensity: 60,
+                  ease: { type: "tween", duration: 0.6, ease: "easeOut" },
+                  flickerEnabled: true,
+                  flickerColor: "#94A3B8",
+                  flickerIntensity: 40,
+                  flickerSpeed: 5,
+                }}
+                hoverAnimation={{
+                  type: "diffusion",
+                  lines: "oneLine",
+                  radius: 2,
+                }}
+                font={{
+                  fontFamily: "var(--font-space-grotesk)",
+                  fontSize: "clamp(2.25rem, 6vw, 3.75rem)",
+                  fontWeight: "700",
+                  lineHeight: "1.1",
+                  letterSpacing: "-0.02em",
+                  textAlign: "left",
+                }}
+              />
+            </>
+          )}
+        </div>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
           No resumé bingo — just the tools I actually use every week, from
           interface to infrastructure.
