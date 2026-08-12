@@ -139,6 +139,7 @@ Next.js, Python, Node.js, and the database underneath.
 I sweat the boring parts: load time, edge cases, code you can still read in six months."
               color="#94A3B8"
               tag="div"
+              hoverAnimation={{ type: "none" }}
               enterAnimation={{
                 mode: "multiLine",
                 restState: "solid",
@@ -146,7 +147,10 @@ I sweat the boring parts: load time, edge cases, code you can still read in six 
                 position: "above",
                 scrambleIntensity: 45,
                 ease: { type: "tween", duration: 0.6, ease: "easeOut" },
-                flickerEnabled: true,
+                // Flicker OFF: maybeFlicker spawns 5-10 fire-and-forget loops
+                // PER CHAR (157 chars -> render flood -> never settles, esp.
+                // with devtools open). Insert-scramble remains; flicker dies.
+                flickerEnabled: false,
                 flickerColor: "#64748B",
                 flickerIntensity: 30,
                 flickerSpeed: 5,

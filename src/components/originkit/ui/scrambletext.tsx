@@ -249,6 +249,14 @@ export default function GlitchCharReveal(props: any) {
     // ── State ─────────────────────────────────────────────────────────────────
     const [lineGroups, setLineGroups] = useState<number[][]>([])
     const [displays, setDisplays] = useState<Record<string, CharState>>({})
+    // Content-key guard for detectLines: during the insert animation chars are
+    // removed/re-added from flow, so the root's height changes and the
+    // ResizeObserver fires on EVERY step. Without this guard setLineGroups gets
+    // a new array identity each time -> the enter-animation effect (dep:
+    // lineGroups) re-runs -> setDisplays({}) resets -> chars unplace -> height
+    // changes again -> infinite restart loop ("it repeats forever"). Only push
+    // new lineGroups when the actual line structure changed.
+    const lineGroupsKeyRef = useRef("")
     const [placedChars, setPlacedChars] = useState<Record<number, number[]>>({})
     const [shouldAnimate, setShouldAnimate] = useState(false)
     const [enterAnimComplete, setEnterAnimComplete] = useState(false)
@@ -311,6 +319,9 @@ export default function GlitchCharReveal(props: any) {
                 )
             )
         })
+        const key = JSON.stringify(allLines)
+        if (key === lineGroupsKeyRef.current) return
+        lineGroupsKeyRef.current = key
         setLineGroups(allLines)
     }
 
