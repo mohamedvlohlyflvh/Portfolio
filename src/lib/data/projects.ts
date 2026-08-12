@@ -5,36 +5,19 @@ import {
   SiReact,
   SiTypescript,
   SiTailwindcss,
-  SiPython,
-  SiNodedotjs,
-  SiSupabase,
-  SiPostgresql,
-  SiVercel,
-  SiVite,
-  SiGoogle,
   SiGithub,
+  SiGoogle,
 } from "react-icons/si";
-import {
-  Database,
-  Map,
-  AudioLines,
-  Terminal,
-} from "lucide-react";
+import { Database } from "lucide-react";
 import { hymeriaTileSrc } from "@/components/work/tiles/hymeria";
-import { meridianTileSrc, MeridianTile } from "@/components/work/tiles/meridian";
-import { graticuleTileSrc, GraticuleTile } from "@/components/work/tiles/graticule";
-import { cassetteTileSrc, CassetteTile } from "@/components/work/tiles/cassette";
 
 /**
- * Featured work — two shipped apps + prototypes.
- * Replace the placeholder GitHub links / placeholder projects with real ones.
+ * Selected work — two shipped apps.
  *
  * Span contract (progressive breakpoints):
  *   base  → 1×1 single column (mobile)
- *   sm    → 6-col tablet grid (featured 6 / others 3)
- *   lg    → 12-col asymmetric bento (7×2 featured + 5/5/5/7)
- * Tiles live as components in `src/components/work/tiles/` — this file only
- * references them (plus their data-URL strings for the hover-reveal shelf).
+ *   sm    → 6-col tablet grid
+ *   lg    → 12-col asymmetric bento (7×2 featured + 5)
  */
 export const GITHUB = "https://github.com/mohamedvlohlyflvh";
 
@@ -58,10 +41,6 @@ export type Project = {
 
 const dexieIcon: IconType = Database;
 const authIcon: IconType = SiGoogle;
-const dbIcon: IconType = Database;
-const mapIcon: IconType = Map;
-const whisperIcon: IconType = AudioLines;
-const apiIcon: IconType = Terminal;
 
 export const PROJECTS: Project[] = [
   {
@@ -105,88 +84,11 @@ export const PROJECTS: Project[] = [
     github: `${GITHUB}/hymeria-toolkit`,
     previews: [
       { src: "/work/hymeria.png", alt: "Hymeria Toolkit — the live app" },
-      {
-        src: hymeriaTileSrc,
-        alt: "Hymeria Toolkit brand tile",
-      },
+      { src: hymeriaTileSrc, alt: "Hymeria Toolkit brand tile" },
     ],
-    span: "col-span-1 row-span-1 sm:col-span-3 lg:col-span-5",
+    span: "col-span-1 row-span-1 sm:col-span-6 lg:col-span-5",
     year: "2026",
-  },
-  {
-    slug: "meridian",
-    name: "Meridian",
-    gloss: "realtime ops dashboard",
-    description:
-      "Latency, errors and deploys on one live grid — a single pane for what's actually breaking in production.",
-    stack: [
-      { icon: SiNextdotjs, label: "Next.js" },
-      { icon: SiTypescript, label: "TypeScript" },
-      { icon: SiNodedotjs, label: "Node.js" },
-      { icon: SiPostgresql, label: "Postgres" },
-      { icon: SiSupabase, label: "Supabase" },
-      { icon: SiTailwindcss, label: "Tailwind" },
-    ],
-    github: `${GITHUB}/meridian`,
-    previews: [
-      {
-        src: meridianTileSrc,
-        alt: "Meridian brand tile",
-      },
-    ],
-    tile: MeridianTile,
-    span: "col-span-1 row-span-1 sm:col-span-3 lg:col-span-5",
-    year: "2025",
-  },
-  {
-    slug: "graticule",
-    name: "Graticule",
-    gloss: "map explorer",
-    description:
-      "GPX traces, elevation profiles and offline tiles — maps that keep working when the network doesn't.",
-    stack: [
-      { icon: SiVite, label: "Vite" },
-      { icon: SiReact, label: "React" },
-      { icon: SiTypescript, label: "TypeScript" },
-      { icon: mapIcon, label: "MapLibre" },
-      { icon: dbIcon, label: "Offline tiles" },
-    ],
-    github: `${GITHUB}/graticule`,
-    previews: [
-      {
-        src: graticuleTileSrc,
-        alt: "Graticule brand tile",
-      },
-    ],
-    tile: GraticuleTile,
-    span: "col-span-1 row-span-1 sm:col-span-3 lg:col-span-5",
-    year: "2025",
-  },
-  {
-    slug: "cassette",
-    name: "Cassette",
-    gloss: "audio diary",
-    description:
-      "Record, transcribe and search voice notes — transcription runs locally, so the audio never leaves the machine.",
-    stack: [
-      { icon: SiNextdotjs, label: "Next.js" },
-      { icon: SiPython, label: "Python" },
-      { icon: whisperIcon, label: "Whisper" },
-      { icon: dexieIcon, label: "IndexedDB" },
-      { icon: SiVercel, label: "Vercel" },
-    ],
-    github: `${GITHUB}/cassette`,
-    previews: [
-      {
-        src: cassetteTileSrc,
-        alt: "Cassette brand tile",
-      },
-    ],
-    tile: CassetteTile,
-    span: "col-span-1 row-span-1 sm:col-span-3 lg:col-span-7",
-    year: "2024",
   },
 ];
 
 export const GITHUB_ICON = SiGithub;
-export { apiIcon };

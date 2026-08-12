@@ -135,15 +135,14 @@ export function Work() {
             <div className="max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg">
               {reduced ? (
                 <p>
-                  Two apps I use daily and three prototypes I keep sharpening.
-                  The featured two link straight to the live product — the rest
-                  live on GitHub, source and all.
+                  Two apps I build and use daily — both shipped to production.
+                  They link straight to the live product — source code is on GitHub.
                 </p>
               ) : (
                 <GlitchCharReveal
-                  words="Two apps I use daily and three prototypes I keep sharpening.
+                  words="Two apps I build and use daily — both shipped to production.
 
-The featured two link straight to the live product — the rest live on GitHub, source and all."
+They link straight to the live product — source code is on GitHub."
                   color="#94A3B8"
                   tag="div"
                   hoverAnimation={{ type: "none" }}

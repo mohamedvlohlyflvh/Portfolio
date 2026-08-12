@@ -1,29 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
+import ZoomTextTunnel from "@/components/originkit/ui/infinite-text-passage";
 
-/**
- * HeroScroll — immersive full-screen pinned scroll section.
- *
- * Displays "HYMERIOUS" with GSAP ScrollTrigger-driven animations:
- * - 0–20%: entrance (blur → crisp, opacity 0→1, letter-spacing tightens)
- * - 20–80%: scale 1→1.35, rotateX 0→15deg, cyan glow intensifies
- * - 80–100%: scale 1.8, opacity 0, blur 16px → seamless exit into page
- *
- * Reduced-motion: renders a static, beautifully styled H1 (no GSAP).
- */
+const HERO_TEXTS = ["Welcome to", "My world", "HYMERIOUS"];
+
 export function HeroScroll() {
   const reduced = usePrefersReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     if (reduced) return;
     const section = sectionRef.current;
-    const text = textRef.current;
-    if (!section || !text) return;
+    if (!section) return;
 
+    let isCancelled = false;
     let ctx: ReturnType<typeof import("gsap").gsap.context> | null = null;
 
     const init = async () => {
@@ -31,110 +24,47 @@ export function HeroScroll() {
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       gsap.registerPlugin(ScrollTrigger);
 
-      // Split text into per-character spans for staggered animation
-      const chars = "HYMERIOUS".split("");
-      text.innerHTML = chars
-        .map(
-          (char) =>
-            `<span class="hero-char" style="display:inline-block;will-change:transform,filter,opacity;transform-origin:center bottom">${char}</span>`
-        )
-        .join("");
-
-      const charEls = text.querySelectorAll<HTMLElement>(".hero-char");
+      if (isCancelled) return;
 
       ctx = gsap.context(() => {
-        // Entrance timeline (0–20% scroll)
-        const entranceTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "20% top",
-            scrub: 0.5,
-            pin: false,
-          },
-        });
-
-        entranceTL.from(charEls, {
-          opacity: 0,
-          filter: "blur(20px)",
-          letterSpacing: "0.5em",
-          y: 40,
-          stagger: 0.03,
-          duration: 1,
-          ease: "power2.out",
-        });
-
-        // Progression (20–80% scroll) — scale, rotate, glow
-        const progressionTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "20% top",
-            end: "80% top",
-            scrub: 0.5,
-            pin: false,
-          },
-        });
-
-        progressionTL.to(text, {
-          scale: 1.35,
-          rotateX: 15,
-          filter: "drop-shadow(0 0 35px rgba(34,211,238,0.4))",
-          duration: 1,
-          ease: "none",
-        });
-
-        // Exit (80–100% scroll) — scale up, fade out, blur
-        const exitTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "80% top",
-            end: "100% top",
-            scrub: 0.5,
-            pin: false,
-          },
-        });
-
-        exitTL.to(text, {
-          scale: 1.8,
-          opacity: 0,
-          filter: "blur(16px)",
-          duration: 1,
-          ease: "power2.in",
-        });
-
-        // Pin the section during scroll
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: "100% top",
+          end: "+=220%",
           pin: true,
-          pinSpacing: false,
+          scrub: 0.5,
           anticipatePin: 1,
+          onUpdate: (self) => {
+            if (!isCancelled) {
+              setScrollProgress(self.progress);
+            }
+          },
         });
       }, section);
+
+      ScrollTrigger.refresh();
     };
 
     init();
 
     return () => {
+      isCancelled = true;
       ctx?.revert();
     };
   }, [reduced]);
 
-  // Static fallback for reduced motion
   if (reduced) {
     return (
       <section
         id="hero-scroll"
-        className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-slate-950"
+        className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-slate-950 px-4"
       >
-        {/* Radial glow */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-500/15 via-transparent to-transparent"
         />
         <h1
-          className="relative font-display text-[clamp(3rem,12vw,10rem)] font-bold uppercase leading-none tracking-tighter text-white"
+          className="relative font-display text-[clamp(2.5rem,8vw,7rem)] font-bold uppercase leading-none tracking-tight text-white text-center"
           style={{ textShadow: "0 0 40px rgba(34,211,238,0.3)" }}
         >
           HYMERIOUS
@@ -148,9 +78,8 @@ export function HeroScroll() {
       ref={sectionRef}
       id="hero-scroll"
       className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-slate-950"
-      style={{ perspective: "1000px" }}
     >
-      {/* Noise texture overlay */}
+      {/* Background Noise */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
@@ -161,22 +90,39 @@ export function HeroScroll() {
         }}
       />
 
-      {/* Radial cyan glow */}
+      {/* Radial Cyan Glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-500/15 via-transparent to-transparent"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-500/20 via-transparent to-transparent"
       />
 
-      {/* Text */}
+      {/* Originkit Infinite Text Passage Component */}
+      <div className="relative z-10 h-full w-full max-w-7xl px-4">
+        <ZoomTextTunnel
+          texts={HERO_TEXTS}
+          suffixes={[null, null, <span key="dot" style={{ color: "#22d3ee" }}>.</span>]}
+          scrollTriggered={true}
+          progress={scrollProgress}
+          maxScale={30}
+          color="#FFFFFF"
+          font={{
+            fontFamily: "var(--font-display), system-ui, sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(3rem, 10vw, 8.5rem)",
+            lineHeight: "1.05",
+            letterSpacing: "-0.02em",
+            textTransform: "uppercase",
+            textAlign: "center",
+          }}
+        />
+      </div>
+
+      {/* Scroll Cue Indicator */}
       <div
-        ref={textRef}
-        className="relative font-display text-[clamp(3rem,12vw,10rem)] font-bold uppercase leading-none tracking-tighter text-white"
-        style={{
-          transformStyle: "preserve-3d",
-          willChange: "transform, filter, opacity",
-        }}
+        className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-xs font-medium uppercase tracking-[0.3em] text-slate-500 transition-opacity duration-300 z-20"
+        style={{ opacity: scrollProgress > 0.85 ? 0 : 0.7 }}
       >
-        HYMERIOUS
+        Scroll to explore
       </div>
     </section>
   );
