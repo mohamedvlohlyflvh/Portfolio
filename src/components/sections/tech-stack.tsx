@@ -48,7 +48,7 @@ export function TechStack() {
     <section
       id="stack"
       aria-labelledby="stack-heading"
-      className="relative py-32 md:py-40"
+      className="relative overflow-x-clip py-32 md:py-40"
     >
       {/* Divider + faint ambient tint */}
       <div

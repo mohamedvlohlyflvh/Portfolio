@@ -22,7 +22,7 @@ export function Footer() {
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub profile (opens in new tab)"
-          className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          className="-my-3 inline-flex items-center gap-2 px-2 py-3 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 transition-colors duration-300 hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
         >
           <GITHUB_ICON className="size-4" aria-hidden />
           GitHub

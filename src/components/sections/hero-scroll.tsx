@@ -30,10 +30,11 @@ export function HeroScroll() {
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: "+=220%",
+          end: () => (window.matchMedia("(max-width: 640px)").matches ? "+=150%" : "+=220%"),
           pin: true,
           scrub: 0.5,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             if (!isCancelled) {
               setScrollProgress(self.progress);

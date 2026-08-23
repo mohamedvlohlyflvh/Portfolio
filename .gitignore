@@ -43,3 +43,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# local audit scripts
+/_e2e/

@@ -174,7 +174,7 @@ They link straight to the live product — source code is on GitHub."
               href={GITHUB}
               target="_blank"
               rel="noreferrer"
-              className={`group inline-flex items-center gap-2 rounded-md text-sm font-medium text-slate-300 transition-colors duration-300 hover:text-cyan-300 ${FOCUS_RING}`}
+              className={`group -mx-2 inline-flex items-center gap-2 px-2 py-3 text-sm font-medium text-slate-300 transition-colors duration-300 hover:text-cyan-300 ${FOCUS_RING}`}
             >
               <GITHUB_ICON className="size-4 text-slate-400 transition-colors duration-300 group-hover:text-cyan-300" aria-hidden />
               github.com/mohamedvlohlyflvh
@@ -261,7 +261,7 @@ They link straight to the live product — source code is on GitHub."
                       target="_blank"
                       rel="noreferrer"
                       aria-label={`${p.demo ? "Open live demo of" : "Open source of"} ${p.name}`}
-                      className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-slate-300 transition-all duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-cyan-400/50 hover:text-cyan-300 active:scale-95 ${FOCUS_RING}`}
+                      className={`inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-slate-300 transition-all duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-cyan-400/50 hover:text-cyan-300 active:scale-95 ${FOCUS_RING}`}
                     >
                       <ArrowUpRight className="size-4" aria-hidden />
                     </a>

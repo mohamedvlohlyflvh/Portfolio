@@ -67,9 +67,9 @@ export function Hero() {
         <AvailabilityBadge />
 
         {/* Wordmark — scramble reveal, crisp and unglazed */}
-        <h1 className="mt-12 max-w-5xl font-display text-[clamp(2.5rem,5.5vw,5rem)] font-bold uppercase leading-[1.05] tracking-tight text-white">
+        <h1 className="mt-10 max-w-5xl break-words font-display text-[clamp(1.9rem,8vw,5rem)] font-bold uppercase leading-[1.05] tracking-tight text-white sm:mt-12">
           <ScrambleText
-            text="Muhammad Said"
+            text="Muhammad Saeed"
             delay={500}
             duration={600}
             stepMs={120}
@@ -78,10 +78,10 @@ export function Hero() {
         </h1>
 
         {/* Role line — Originkit glitch reveal, appears at 1000ms */}
-        <div className="mt-5 text-sm font-medium uppercase tracking-[0.4em] text-slate-400 sm:text-base">
+        <div className="mt-5 text-xs font-medium uppercase tracking-[0.22em] text-slate-400 sm:text-sm sm:tracking-[0.4em]">
           {!showRoleLine && (
             /* Same metrics placeholder — keeps layout stable until mount */
-            <p aria-hidden className="opacity-0">
+            <p aria-hidden className="opacity-0 tracking-[0.22em] sm:tracking-[0.4em]">
               Full-Stack Developer
             </p>
           )}
@@ -185,14 +185,15 @@ I sweat the boring parts: load time, edge cases, code you can still read in six 
         </motion.div>
       </motion.div>
 
-      {/* Scroll cue */}
+      {/* Scroll cue — invisible p-3 expands the tap target to 44px,
+          -m-3 keeps the visual exactly where it was */}
       <motion.a
         href="#work"
         aria-label="Scroll to work"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: motionTokens.duration.fast, ease: motionTokens.ease.out }}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-slate-500 transition-colors hover:text-cyan-300"
+        className="absolute bottom-8 left-1/2 z-10 -m-3 -translate-x-1/2 p-3 text-slate-500 transition-colors hover:text-cyan-300"
       >
         <ChevronDown className="size-5 animate-scroll-cue" aria-hidden />
       </motion.a>
