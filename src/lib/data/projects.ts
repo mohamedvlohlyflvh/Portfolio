@@ -81,7 +81,7 @@ export const PROJECTS: Project[] = [
       { icon: authIcon, label: "Auth.js" },
     ],
     demo: "https://hymeria-toolkit.vercel.app/",
-    github: `${GITHUB}/hymeria-toolkit`,
+    github: `${GITHUB}/Hymerious`,
     previews: [
       { src: "/work/hymeria.png", alt: "Hymeria Toolkit — the live app" },
       { src: hymeriaTileSrc, alt: "Hymeria Toolkit brand tile" },
