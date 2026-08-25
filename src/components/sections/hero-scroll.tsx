@@ -120,8 +120,8 @@ export function HeroScroll() {
 
       {/* Scroll Cue Indicator */}
       <div
-        className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-xs font-medium uppercase tracking-[0.3em] text-slate-500 transition-opacity duration-300 z-20"
-        style={{ opacity: scrollProgress > 0.85 ? 0 : 0.7 }}
+        className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-xs font-medium uppercase tracking-[0.3em] text-slate-300 transition-opacity duration-300 z-20"
+        style={{ opacity: scrollProgress > 0.85 ? 0 : 0.9 }}
       >
         Scroll to explore
       </div>

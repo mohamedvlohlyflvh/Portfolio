@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Vendored third-party components — installed via `originkit add`, kept as-is.
     "src/components/originkit/**",
+    // Local QA/e2e scratch scripts — not part of the app bundle.
+    "_e2e/**",
   ]),
 ]);
 
