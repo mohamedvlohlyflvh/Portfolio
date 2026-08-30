@@ -3,6 +3,8 @@
 **Personal portfolio of Muhammed Said — frontend-first full-stack developer.**
 Brutalist dark design, GSAP-driven motion, originkit animation components.
 
+**Live:** [https://hymerious.vercel.app](https://hymerious.vercel.app)
+
 ## ✨ Highlights
 
 - **Hero** with scramble-decode subtitle animation
